@@ -67,3 +67,38 @@ def calculate_grade_distribution(records: list) -> dict:
 
 def is_honor_roll(score: float, total_credits: float) -> bool:
     return score >= 85 and total_credits >= 10
+
+
+def calculate_median(scores: list) -> float:
+    if not scores:
+        return 0.0
+    sorted_scores = sorted(scores)
+    n = len(sorted_scores)
+    mid = n // 2
+    if n % 2 == 0:
+        return round((sorted_scores[mid - 1] + sorted_scores[mid]) / 2, 2)
+    return round(sorted_scores[mid], 2)
+
+
+def calculate_highest_lowest(scores: list) -> dict:
+    if not scores:
+        return {"highest": 0, "lowest": 0, "difference": 0}
+    highest = max(scores)
+    lowest = min(scores)
+    return {"highest": highest, "lowest": lowest, "difference": round(highest - lowest, 2)}
+
+
+def calculate_pass_rate(grades: list) -> float:
+    if not grades:
+        return 0.0
+    passed = sum(1 for g in grades if g >= 60)
+    return round(passed / len(grades), 2)
+
+
+def percentile_rank(score: float, scores: list) -> float:
+    if not scores:
+        return 0.0
+    if len(scores) == 1:
+        return 100.0
+    below = sum(1 for s in scores if s < score)
+    return round((below / (len(scores) - 1)) * 100, 2)
